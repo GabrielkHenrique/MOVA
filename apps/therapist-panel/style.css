@@ -1,0 +1,391 @@
+/* ============================================================
+   MOVA Therapist Panel Styles
+   Identity: professional but shares MOVA warm palette
+   ============================================================ */
+
+:root {
+  --mova-red:    #e8401a;
+  --mova-orange: #ff8c00;
+  --mova-dark:   #2d1f0f;
+  --mova-bg:     #fdf6f0;
+  --mova-card:   #ffffff;
+  --mova-gold:   #f5c800;
+  --color-success: #2e7d32;
+  --color-danger:  #c62828;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  background: var(--mova-bg);
+  color: var(--mova-dark);
+  padding: 32px;
+  min-height: 100vh;
+}
+
+#app { max-width: 720px; margin: 0 auto; }
+
+/* ── Header ── */
+.panel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 3px solid #ffe0b2;
+}
+.panel-header h1 { font-size: 2rem; font-weight: 900; color: var(--mova-red); }
+
+.status-indicator {
+  padding: 8px 18px; border-radius: 50px;
+  font-weight: 700; font-size: 0.9rem;
+  background: #fdecea; color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+}
+.status-indicator.connected {
+  background: #e8f5e9; color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+/* ── Hardware status section ── */
+.hardware-section {
+  background: var(--mova-card);
+  border-radius: var(--radius);
+  padding: 18px 28px;
+  box-shadow: var(--shadow);
+  border: 2px solid #ffe0b2;
+  margin-bottom: 16px;
+}
+.hardware-section h2 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--mova-orange); font-weight: 700;
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1px solid #ffe0b2;
+}
+.hw-status-row { display: flex; align-items: center; }
+.hw-badge {
+  display: inline-block;
+  padding: 7px 18px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid #3f51b5;
+  color: #3f51b5;
+  background: #3f51b518;
+  letter-spacing: 0.3px;
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+}
+
+/* ── Patient section ── */
+.patient-section {
+  background: var(--mova-card);
+  border-radius: var(--radius);
+  padding: 18px 28px;
+  box-shadow: var(--shadow);
+  border: 2px solid #ffe0b2;
+  margin-bottom: 24px;
+}
+.patient-section h2 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--mova-orange); font-weight: 700;
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1px solid #ffe0b2;
+}
+.patient-row {
+  display: flex; align-items: center; gap: 14px;
+}
+.patient-row label {
+  font-size: 0.9rem; color: #8d6e63; font-weight: 600;
+  white-space: nowrap;
+}
+.patient-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mova-dark);
+  border: 2px solid #ffe0b2;
+  border-radius: 8px;
+  background: var(--mova-bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.patient-input:focus { border-color: var(--mova-orange); }
+
+/* ── Grid layout ── */
+.panel-main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+section {
+  background: var(--mova-card);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 2px solid #ffe0b2;
+}
+section h2 {
+  font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--mova-orange); font-weight: 700;
+  margin-bottom: 20px; padding-bottom: 10px;
+  border-bottom: 1px solid #ffe0b2;
+}
+
+/* ── Buttons ── */
+.action-buttons { display: flex; flex-direction: column; gap: 12px; }
+
+/* Reset bar — separado visualmente dos botões principais */
+.reset-bar {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed #e0c8b0;
+}
+
+.btn-reset {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid #b0bec5;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #546e7a;
+  background: #eceff1;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.btn-reset:hover:not(:disabled) {
+  background: #fff3e0;
+  border-color: #ff8c00;
+  color: #e65100;
+}
+.btn-reset:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.btn {
+  padding: 16px 20px; font-size: 1.05rem; font-weight: 700;
+  border: none; border-radius: 10px; cursor: pointer;
+  color: white; transition: background 0.15s, transform 0.1s;
+  text-align: center;
+}
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary { background: var(--mova-red); }
+.btn-primary:hover:not(:disabled) { background: #c4360f; }
+
+.btn-secondary { background: #607d8b; }
+.btn-secondary:hover:not(:disabled) { background: #455a64; }
+
+.btn-danger { background: var(--color-danger); }
+.btn-danger:hover:not(:disabled) { background: #b71c1c; }
+
+/* ── Live Data ── */
+.data-grid { display: flex; flex-direction: column; gap: 14px; }
+
+.data-card {
+  background: var(--mova-bg);
+  border: 2px solid #ffe0b2;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.data-label { font-size: 1rem; color: #8d6e63; font-weight: 600; }
+.data-value { font-size: 1.6rem; font-weight: 900; color: var(--mova-dark); }
+.data-value#val-status { font-size: 1rem; color: var(--mova-red); }
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+
+/* ── Results Section ── */
+.results-section {
+  grid-column: 1 / -1; /* spans full width */
+  border-color: var(--mova-gold) !important;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.results-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rs-card {
+  background: var(--mova-bg);
+  border: 2px solid #ffe0b2;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rs-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #8d6e63; font-weight: 600; }
+.rs-value { font-size: 1.5rem; font-weight: 900; color: var(--mova-dark); }
+.rs-value.accent { color: var(--mova-red); font-size: 2rem; }
+
+/* Performance bar */
+.perf-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.perf-bar-bg {
+  flex: 1;
+  height: 18px;
+  background: #ffe0b2;
+  border-radius: 50px;
+  overflow: hidden;
+}
+.perf-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mova-orange), var(--mova-red));
+  border-radius: 50px;
+  transition: width 0.8s ease;
+  width: 0%;
+}
+.perf-bar-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mova-dark);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* PDF / Print Button */
+.btn-pdf {
+  background: #1b5e20;
+  width: 100%;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+.btn-pdf:hover { background: #2e7d32; }
+
+.pdf-hint {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #8d6e63;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════
+   PRINT REPORT — hidden on-screen, shown when printing
+   ══════════════════════════════════════════════════════ */
+
+#print-report {
+  display: none; /* hidden on screen always */
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm 16mm;
+  }
+
+  /* Hide everything except the report */
+  body * { visibility: hidden; }
+  #print-report,
+  #print-report * { visibility: visible; }
+
+  /* Reset body for print */
+  body {
+    background: #fff !important;
+    padding: 0 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  #print-report {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    color: #111;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11pt;
+    padding: 0;
+  }
+
+  /* ── Title block ── */
+  .pr-title-block {
+    margin-bottom: 10pt;
+  }
+  .pr-mova {
+    font-size: 28pt;
+    font-weight: 900;
+    color: #e8401a;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -1px;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .pr-subtitle {
+    font-size: 14pt;
+    color: #555;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  /* ── Horizontal rule ── */
+  .pr-rule {
+    border: none;
+    border-top: 1px solid #bbb;
+    margin: 10pt 0;
+    display: block;
+  }
+
+  /* ── Info table (Paciente / Jogo / Data) ── */
+  .pr-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 4pt;
+  }
+  .pr-info-table .pr-key {
+    width: 30%;
+    padding: 3pt 6pt 3pt 0;
+    color: #555;
+    font-weight: normal;
+  }
+  .pr-info-table .pr-val {
+    padding: 3pt 0;
+    color: #111;
+    font-weight: bold;
+  }
+
+  /* ── Stats table (metrics) ── */
+  .pr-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 4pt;
+  }
+  .pr-stat-key {
+    width: 55%;
+    padding: 4pt 6pt 4pt 0;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .pr-stat-val {
+    padding: 4pt 0;
+    color: #111;
+    font-weight: bold;
+  }
+
+  /* ── Footer ── */
+  .pr-footer {
+    position: fixed;
+    bottom: 10pt;
+    left: 0; right: 0;
+    font-size: 8pt;
+    color: #777;
+    line-height: 1.6;
+  }
+}

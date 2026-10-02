@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Terapeuta - MOVA</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="panel-header">
+      <h1>🎪 MOVA — Painel do Terapeuta</h1>
+      <div class="status-indicator" id="connection-status">Desconectado</div>
+    </header>
+
+    <!-- ── Hardware Status ── -->
+    <section class="hardware-section">
+      <h2>Hardware</h2>
+      <div class="hw-status-row">
+        <div class="hw-badge" id="hw-badge">● Simulador ativo</div>
+      </div>
+    </section>
+
+    <!-- ── Patient nickname ── -->
+    <section class="patient-section">
+      <h2>Paciente</h2>
+      <div class="patient-row">
+        <label for="patient-nickname">Apelido / Identificação</label>
+        <input
+          type="text"
+          id="patient-nickname"
+          class="patient-input"
+          value="Paciente"
+          placeholder="Paciente"
+          autocomplete="off"
+        />
+      </div>
+    </section>
+
+    <main class="panel-main">
+      <section class="control-section">
+        <h2>Controles da Sessão</h2>
+        
+        <div class="activity-selector">
+          <label for="game-select">Atividade:</label>
+          <select id="game-select">
+            <option value="estoura-baloes">Estoura-Balões</option>
+            <option value="memory-garden" disabled>Memory Garden (Em breve)</option>
+          </select>
+        </div>
+
+        <div class="action-buttons">
+          <button id="btn-start" class="btn btn-primary">▶ Iniciar Atividade</button>
+          <button id="btn-pause" class="btn btn-secondary" disabled>⏸ Pausar</button>
+          <button id="btn-end" class="btn btn-danger" disabled>⏹ Encerrar Atividade</button>
+        </div>
+
+        <div class="reset-bar">
+          <button id="btn-reset" class="btn btn-reset" title="Volta tudo para o estado inicial sem reiniciar o servidor">🔄 Resetar para o Início</button>
+        </div>
+
+      </section>
+
+      <section class="live-data-section">
+        <h2>Dados ao Vivo</h2>
+        
+        <div class="data-grid">
+          <div class="data-card">
+            <span class="data-label">Status</span>
+            <span class="data-value" id="val-status">Aguardando</span>
+          </div>
+          <div class="data-card">
+            <span class="data-label">Pontuação</span>
+            <span class="data-value" id="val-score">0</span>
+          </div>
+          <div class="data-card">
+            <span class="data-label">Tempo Restante</span>
+            <span class="data-value" id="val-medals">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS SECTION — shown after EVT_RESULTS_READY -->
+      <section class="results-section hidden" id="results-section">
+        <h2>📊 Resultado da Sessão</h2>
+
+        <div class="results-summary-grid">
+          <div class="rs-card">
+            <span class="rs-label">Pontuação Final</span>
+            <span class="rs-value accent" id="panel-score">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Acertos</span>
+            <span class="rs-value" id="panel-hits">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Erros</span>
+            <span class="rs-value" id="panel-misses">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Total de Rodadas</span>
+            <span class="rs-value" id="panel-rounds">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Tempo Médio de Reação</span>
+            <span class="rs-value" id="panel-rt">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Duração da Sessão</span>
+            <span class="rs-value" id="panel-duration">—</span>
+          </div>
+          <div class="rs-card">
+            <span class="rs-label">Desempenho</span>
+            <span class="rs-value" id="panel-perf">—</span>
+          </div>
+        </div>
+
+        <div class="perf-bar-wrap">
+          <div class="perf-bar-bg">
+            <div class="perf-bar-fill" id="perf-bar-fill"></div>
+          </div>
+          <span class="perf-bar-label" id="perf-bar-label">0%</span>
+        </div>
+
+        <button id="btn-pdf" class="btn btn-pdf">🖨️ Imprimir / Salvar PDF</button>
+        <p class="pdf-hint">Use Ctrl+P → Salvar como PDF no navegador</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       PRINTABLE REPORT — hidden on screen, visible when printing
+       ══════════════════════════════════════════════════════════ -->
+  <div id="print-report">
+    <div class="pr-title-block">
+      <span class="pr-mova">MOVA</span>
+      <span class="pr-subtitle">— PassoCerto</span>
+    </div>
+    <div class="pr-rule"></div>
+
+    <table class="pr-info-table">
+      <tr>
+        <td class="pr-key">Paciente:</td>
+        <td class="pr-val" id="pr-patient">Paciente</td>
+      </tr>
+      <tr>
+        <td class="pr-key">Jogo:</td>
+        <td class="pr-val">Estoura-Balões</td>
+      </tr>
+      <tr>
+        <td class="pr-key">Data:</td>
+        <td class="pr-val" id="pr-date">—</td>
+      </tr>
+    </table>
+
+    <div class="pr-rule"></div>
+
+    <table class="pr-stats-table">
+      <tr>
+        <td class="pr-stat-key">RODADAS TOTAIS</td>
+        <td class="pr-stat-val" id="pr-rounds">—</td>
+      </tr>
+      <tr>
+        <td class="pr-stat-key">ACERTOS</td>
+        <td class="pr-stat-val" id="pr-hits">—</td>
+      </tr>
+      <tr>
+        <td class="pr-stat-key">ERROS</td>
+        <td class="pr-stat-val" id="pr-misses">—</td>
+      </tr>
+      <tr>
+        <td class="pr-stat-key">TEMPO MÉDIO</td>
+        <td class="pr-stat-val" id="pr-rt">—</td>
+      </tr>
+      <tr>
+        <td class="pr-stat-key">PONTUAÇÃO</td>
+        <td class="pr-stat-val" id="pr-score">—</td>
+      </tr>
+      <tr>
+        <td class="pr-stat-key">DURAÇÃO</td>
+        <td class="pr-stat-val" id="pr-duration">—</td>
+      </tr>
+    </table>
+
+    <div class="pr-rule"></div>
+
+    <div class="pr-footer">
+      ⚠ Dados de demonstração — não diagnóstico.<br />
+      &nbsp;&nbsp;MOVA é um projeto acadêmico PassoCerto.
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOVA Plaza - TV do Paciente</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./balloon-stage.css" />
+
+</head>
+<body>
+  <div id="app">
+
+    <!-- PLAZA VIEW (Tela inicial - Mundo MOVA) -->
+    <div id="plaza-view" class="view active">
+      <header class="plaza-header">
+        <h1>🏘️ Vila MOVA</h1>
+        <p>Aguardando o terapeuta iniciar a atividade…</p>
+      </header>
+      <div class="vila-map">
+        <!-- Norte / Frente -->
+        <div class="vila-location loc-front active-game">
+          <div class="loc-icon">🎈</div>
+          <h2>Estoura!</h2>
+          <div class="loc-status">ABERTO (FRENTE)</div>
+        </div>
+        <!-- Oeste / Esquerda -->
+        <div class="vila-location loc-left locked">
+          <div class="loc-icon">🎺</div>
+          <h2>O Coreto</h2>
+          <div class="loc-status">EM BREVE (ESQUERDA)</div>
+        </div>
+        <!-- Centro -->
+        <div class="vila-location loc-center">
+          <div class="loc-icon">🎯</div>
+          <h2>Praça Central</h2>
+        </div>
+        <!-- Leste / Direita -->
+        <div class="vila-location loc-right locked">
+          <div class="loc-icon">🌊</div>
+          <h2>A Maré</h2>
+          <div class="loc-status">EM BREVE (DIREITA)</div>
+        </div>
+        <!-- Sul / Atrás -->
+        <div class="vila-location loc-back locked">
+          <div class="loc-icon">🐾</div>
+          <h2>A Onça</h2>
+          <div class="loc-status">EM BREVE (ATRÁS)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME VIEW -->
+    <div id="game-view" class="view">
+      <header class="game-header">
+        <div class="hud-item">
+          <span class="hud-label">Pontos</span>
+          <span class="hud-value" id="score">0</span>
+        </div>
+        <div class="hud-title">🎈 Estoura!</div>
+        <div class="hud-item">
+          <span class="hud-label">Tempo</span>
+          <span class="hud-value" id="timer">60s</span>
+        </div>
+      </header>
+
+      <!-- Festa de balões — sem D-pad, sem setas, sem labels -->
+      <div class="balloon-stage" id="game-area">
+
+        <!-- Bandeirolas decorativas (somente visual) -->
+        <div class="bunting" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- 5 balões nas posições do tapete -->
+        <div class="balloon-wrap zone-front">
+          <div class="balloon"><div class="balloon-shine"></div><div class="balloon-face">😊</div></div>
+          <div class="balloon-string"></div>
+        </div>
+
+        <div class="balloon-wrap zone-left">
+          <div class="balloon"><div class="balloon-shine"></div><div class="balloon-face">😊</div></div>
+          <div class="balloon-string"></div>
+        </div>
+
+        <div class="balloon-wrap zone-center">
+          <div class="balloon"><div class="balloon-shine"></div><div class="balloon-face">😊</div></div>
+          <div class="balloon-string"></div>
+        </div>
+
+        <div class="balloon-wrap zone-right">
+          <div class="balloon"><div class="balloon-shine"></div><div class="balloon-face">😊</div></div>
+          <div class="balloon-string"></div>
+        </div>
+
+        <div class="balloon-wrap zone-back">
+          <div class="balloon"><div class="balloon-shine"></div><div class="balloon-face">😊</div></div>
+          <div class="balloon-string"></div>
+        </div>
+
+      </div>
+
+      <div id="feedback-overlay"></div>
+    </div>
+
+
+
+
+    <!-- RESULTS VIEW (Tela de resultados pós-sessão) -->
+    <div id="results-view" class="view">
+      <div class="results-container">
+        <div class="results-title">Sessão Concluída! 🎉</div>
+
+        <div class="results-score-box">
+          <span class="results-score-label">Pontuação Final</span>
+          <span class="results-score-value" id="res-score">0</span>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat-pill">
+            <span class="stat-icon">🎯</span>
+            <span class="stat-label">Acertos</span>
+            <span class="stat-num" id="res-hits">—</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">✗</span>
+            <span class="stat-label">Erros</span>
+            <span class="stat-num" id="res-misses">—</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">⚡</span>
+            <span class="stat-label">Tempo Médio</span>
+            <span class="stat-num" id="res-rt">— ms</span>
+          </div>
+        </div>
+
+        <div class="results-stars" id="results-stars">
+          <!-- Stars injected by JS -->
+        </div>
+
+        <div class="results-tagline" id="results-tagline"></div>
+      </div>
+    </div>
+
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

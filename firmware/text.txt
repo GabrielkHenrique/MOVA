@@ -1,0 +1,18 @@
+node engine/server.js
+
+npx serve . --listen 3000
+
+$env:ESP32_IP="192.168.4.1"
+node hardware/esp32-client.js
+
+
+(o tapete virtual):
+http://localhost:3000/simulator/
+```
+
+**TV do paciente (tela do jogo):**
+http://localhost:3000/apps/tv/
+
+**Painel do terapeuta:**
+http://localhost:3000/apps/therapist-panel/
+```

@@ -1,0 +1,186 @@
+/* ===================================================
+   BALLOON STAGE — Festa Junina
+   Substitui o D-pad por balões flutuantes com personalidade
+   =================================================== */
+
+/* Stage: céu festivo */
+.balloon-stage {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: grid;
+  grid-template-areas:
+    '.     front  .'
+    'left  center right'
+    '.     back   .';
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px 40px;
+  overflow: hidden;
+}
+
+/* Bandeirolas de festa junina */
+.bunting {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  z-index: 0;
+  pointer-events: none;
+}
+.bunting span {
+  width: 0; height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 28px solid;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+.bunting span:nth-child(1)  { border-top-color: #e53935; }
+.bunting span:nth-child(2)  { border-top-color: #f9a825; }
+.bunting span:nth-child(3)  { border-top-color: #43a047; }
+.bunting span:nth-child(4)  { border-top-color: #1e88e5; }
+.bunting span:nth-child(5)  { border-top-color: #8e24aa; }
+.bunting span:nth-child(6)  { border-top-color: #e53935; }
+.bunting span:nth-child(7)  { border-top-color: #f9a825; }
+.bunting span:nth-child(8)  { border-top-color: #43a047; }
+.bunting span:nth-child(9)  { border-top-color: #1e88e5; }
+.bunting span:nth-child(10) { border-top-color: #8e24aa; }
+
+/* Posições no grid */
+.zone-front  { grid-area: front;  }
+.zone-left   { grid-area: left;   }
+.zone-center { grid-area: center; }
+.zone-right  { grid-area: right;  }
+.zone-back   { grid-area: back;   }
+
+/* Wrapper */
+.balloon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+/* O balão — esfera CSS pura */
+.balloon {
+  position: relative;
+  width: 90px;
+  height: 110px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 60%),
+              linear-gradient(160deg, #ff7043, #e53935);
+  box-shadow: inset -8px -8px 20px rgba(0,0,0,0.2), 0 4px 20px rgba(229,57,53,0.3);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  opacity: 0.12;
+  transform: scale(0.6);
+}
+
+.balloon-shine {
+  position: absolute; top: 18%; left: 22%;
+  width: 28%; height: 22%;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.balloon-face {
+  font-size: 2rem; line-height: 1; z-index: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.balloon-string {
+  width: 2px; height: 36px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 1px;
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes float-idle {
+  0%, 100% { transform: scale(0.6) translateY(0); }
+  50%       { transform: scale(0.6) translateY(-6px); }
+}
+
+/* ── ATIVO — balão aparece com glow laranja ── */
+.balloon-wrap.active .balloon {
+  opacity: 1;
+  transform: scale(1);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.4), transparent 60%),
+              linear-gradient(160deg, #ff8a65, #e53935);
+  box-shadow: inset -8px -8px 20px rgba(0,0,0,0.15),
+              0 0 35px rgba(255,112,67,0.85),
+              0 0 70px rgba(255,112,67,0.4);
+  animation: float-active 2.4s ease-in-out infinite;
+}
+.balloon-wrap.active .balloon-string { opacity: 0.7; }
+@keyframes float-active {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%       { transform: scale(1) translateY(-14px); }
+}
+
+/* ── BOMBA — vermelho furioso + tremor ── */
+.balloon-wrap.target-bomb .balloon {
+  opacity: 1; transform: scale(1);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 60%),
+              linear-gradient(160deg, #ef5350, #b71c1c);
+  box-shadow: inset -8px -8px 20px rgba(0,0,0,0.3),
+              0 0 35px rgba(183,28,28,0.95),
+              0 0 70px rgba(183,28,28,0.5);
+  animation: bomb-shake 0.28s ease-in-out infinite;
+}
+.balloon-wrap.target-bomb .balloon-face::before {
+  content: '💣';
+  font-size: 1.3rem;
+  position: absolute; top: -22px; right: -8px;
+}
+.balloon-wrap.target-bomb .balloon-string { opacity: 0.8; }
+@keyframes bomb-shake {
+  0%, 100% { transform: scale(1) rotate(-2.5deg) translateY(0); }
+  33%       { transform: scale(1.03) rotate(2.5deg) translateY(-4px); }
+  66%       { transform: scale(0.97) rotate(-3deg) translateY(3px); }
+}
+
+/* ── DOURADO — respira e brilha ── */
+.balloon-wrap.target-golden .balloon {
+  opacity: 1; transform: scale(1);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 60%),
+              linear-gradient(160deg, #fff176, #f9a825);
+  box-shadow: inset -8px -8px 20px rgba(0,0,0,0.1),
+              0 0 40px rgba(249,168,37,1),
+              0 0 80px rgba(249,168,37,0.55);
+  animation: golden-breath 1.6s ease-in-out infinite;
+}
+.balloon-wrap.target-golden .balloon-face::before {
+  content: '⭐';
+  font-size: 1.2rem;
+  position: absolute; top: -20px; left: 50%;
+  transform: translateX(-50%);
+  animation: star-spin 2s linear infinite;
+}
+.balloon-wrap.target-golden .balloon-string { opacity: 0.8; }
+@keyframes golden-breath {
+  0%, 100% { transform: scale(1);    box-shadow: inset -8px -8px 20px rgba(0,0,0,0.1), 0 0 40px rgba(249,168,37,1), 0 0 80px rgba(249,168,37,0.55); }
+  50%       { transform: scale(1.12); box-shadow: inset -8px -8px 20px rgba(0,0,0,0.1), 0 0 60px rgba(249,168,37,1), 0 0 110px rgba(249,168,37,0.75); }
+}
+@keyframes star-spin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to   { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* ── ESTOURO ── */
+.balloon-wrap.popped .balloon,
+.balloon-wrap.popped-golden .balloon,
+.balloon-wrap.popped-bomb .balloon {
+  animation: balloon-pop 0.35s ease forwards !important;
+}
+@keyframes balloon-pop {
+  0%   { transform: scale(1);   opacity: 1; }
+  40%  { transform: scale(1.6); opacity: 0.8; }
+  100% { transform: scale(0);   opacity: 0; }
+}

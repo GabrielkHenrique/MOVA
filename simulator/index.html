@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>MOVA Simulador de Tapete</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex; flex-direction: column; align-items: center;
+      background: #1a1a2e; color: #fff;
+      padding: 40px; gap: 20px;
+    }
+    h1 { font-size: 1.8rem; color: #ff8c00; }
+    #status { font-weight: bold; padding: 8px 20px; border-radius: 50px; background: #c62828; }
+    #status.ok { background: #2e7d32; }
+
+    .mat {
+      display: grid;
+      grid-template-areas:
+        ". front ."
+        "left center right"
+        ". back .";
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .zone {
+      width: 120px; height: 80px;
+      background: rgba(255,255,255,0.1);
+      border: 3px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.1s, transform 0.1s;
+    }
+    .zone:active {
+      background: #ff8c00; border-color: #f5c800;
+      color: #1a1a2e; transform: scale(0.95);
+    }
+    .front  { grid-area: front; }
+    .left   { grid-area: left; }
+    .center { grid-area: center; background: rgba(255,255,255,0.18); }
+    .right  { grid-area: right; }
+    .back   { grid-area: back; }
+
+    .log {
+      width: 400px; height: 180px;
+      overflow-y: auto; background: #0d0d1a;
+      border: 1px solid #333; border-radius: 10px;
+      padding: 10px; font-family: monospace; font-size: 0.75rem; color: #aef;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 MOVA — Simulador de Tapete</h1>
+  <div id="status">Conectando…</div>
+
+  <div class="mat">
+    <button class="zone front"  onclick="sendStep('front')">⬆ FRENTE</button>
+    <button class="zone left"   onclick="sendStep('left')">⬅ ESQUERDA</button>
+    <button class="zone center" onclick="sendStep('center')">🎯 CENTRO</button>
+    <button class="zone right"  onclick="sendStep('right')">➡ DIREITA</button>
+    <button class="zone back"   onclick="sendStep('back')">⬇ ATRÁS</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:8080');
+    const statusEl = document.getElementById('status');
+    const logEl = document.getElementById('log');
+
+    function log(msg) {
+      const div = document.createElement('div');
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      logEl.prepend(div);
+    }
+
+    ws.onopen = () => {
+      statusEl.textContent = '✓ Conectado ao Motor';
+      statusEl.classList.add('ok');
+      log('WebSocket conectado.');
+    };
+    ws.onclose = () => {
+      statusEl.textContent = '✗ Desconectado';
+      statusEl.classList.remove('ok');
+      log('WebSocket desconectado.');
+    };
+    ws.onmessage = (e) => {
+      const msg = JSON.parse(e.data);
+      log(`← ${msg.type}${msg.state ? ': ' + msg.state : ''}`);
+    };
+
+    function sendStep(zone) {
+      if (ws.readyState !== WebSocket.OPEN) { log('Não conectado!'); return; }
+      const payload = { type: 'footstep', zone, intensity: +(Math.random().toFixed(2)), timestamp: Date.now() };
+      ws.send(JSON.stringify(payload));
+      log(`→ footstep: ${zone} (intensidade: ${payload.intensity})`);
+    }
+  </script>
+</body>
+</html>

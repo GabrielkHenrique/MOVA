@@ -1,0 +1,13 @@
+{
+  "name": "mova-engine",
+  "version": "1.0.0",
+  "description": "MOVA Game Engine",
+  "main": "engine/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node engine/server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}
