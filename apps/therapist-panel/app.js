@@ -84,8 +84,9 @@ function handleStateChange(state) {
   const isPaused  = state === 'ACTIVITY_PAUSED';
   const isIdle    = state === 'IDLE';
   const isWorld   = state === 'WORLD_EXPLORATION';
+  const isResults = state === 'SHOWING_RESULTS';
 
-  btnStart.disabled = !(isIdle || isWorld);
+  btnStart.disabled = !(isIdle || isWorld || isResults);
   btnPause.disabled = !(isRunning || isPaused);
   btnEnd.disabled   = !(isRunning || isPaused);
   btnPause.innerText = isPaused ? '▶ Retomar' : '⏸ Pausar';

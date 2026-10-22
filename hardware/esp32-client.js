@@ -32,7 +32,7 @@ import WebSocket from 'ws';
 
 // ── Configuration ─────────────────────────────────────────────────────────────
 
-const ESP32_IP      = process.env.ESP32_IP ?? '192.168.1.100';
+const ESP32_IP      = process.env.ESP32_IP ?? '192.168.4.1';
 const ESP32_PORT    = process.env.ESP32_PORT ?? 81;        // typical ESP32 WS port
 const ENGINE_URL    = process.env.ENGINE_URL  ?? 'ws://localhost:8080';
 
@@ -50,9 +50,10 @@ const RECONNECT_DELAY_MS = 3000; // wait before attempting to reconnect
  * @param {string} label       - Human-readable name used in log messages
  * @param {(ws: WebSocket) => void} onOpen  - Called with the socket once open
  * @param {(data: string) => void}  onMessage - Called with each raw message string
+ * @param {() => void} [onClose] - Called when the socket closes
  * @returns {{ getSocket: () => WebSocket | null }}
  */
-function createPersistentSocket(url, label, onOpen, onMessage) {
+function createPersistentSocket(url, label, onOpen, onMessage, onClose) {
     let socket = null;
 
     function connect() {
@@ -71,6 +72,7 @@ function createPersistentSocket(url, label, onOpen, onMessage) {
         socket.on('close', (code, reason) => {
             console.warn(`[${label}] ⚠️  Connection closed (${code}${reason ? ': ' + reason : ''}). Retrying in ${RECONNECT_DELAY_MS / 1000}s …`);
             socket = null;
+            if (onClose) onClose();
             setTimeout(connect, RECONNECT_DELAY_MS);
         });
 
@@ -87,14 +89,22 @@ function createPersistentSocket(url, label, onOpen, onMessage) {
 // ── Engine connection ─────────────────────────────────────────────────────────
 
 let engineSocket = null;
+let esp32Connected = false;
+
+function sendHardwareStatusToEngine() {
+    if (engineSocket && engineSocket.readyState === WebSocket.OPEN) {
+        const status = esp32Connected ? 'ESP32_CONNECTED' : 'ESP32_CONNECTING';
+        engineSocket.send(JSON.stringify({ type: 'client_register', role: 'esp32-bridge', status }));
+    }
+}
 
 const engineConn = createPersistentSocket(
     ENGINE_URL,
     'Engine',
     (ws) => {
         engineSocket = ws;
-        // Identify this process to the engine so it can track hardware status
-        ws.send(JSON.stringify({ type: 'client_register', role: 'esp32-bridge' }));
+        // Identify this process to the engine with actual ESP32 connection state
+        sendHardwareStatusToEngine();
         console.log('[Engine] Sent client_register as esp32-bridge.');
     },
     (data) => {
@@ -109,6 +119,8 @@ createPersistentSocket(
     ESP32_URL,
     'ESP32',
     (_ws) => {
+        esp32Connected = true;
+        sendHardwareStatusToEngine();
         console.log('[ESP32] Ready to receive footstep events.');
     },
     (data) => {
@@ -129,6 +141,14 @@ createPersistentSocket(
             console.log(`[Bridge → Engine] Forwarded: ${data}`);
         } else {
             console.warn('[Bridge] Engine not connected — message dropped.');
+        }
+    },
+    () => {
+        if (esp32Connected) {
+            esp32Connected = false;
+            if (engineSocket && engineSocket.readyState === WebSocket.OPEN) {
+                engineSocket.send(JSON.stringify({ type: 'client_register', role: 'esp32-bridge', status: 'ESP32_DISCONNECTED' }));
+            }
         }
     }
 );

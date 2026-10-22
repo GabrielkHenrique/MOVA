@@ -222,8 +222,8 @@ wss.on('connection', (ws) => {
             case 'client_register':
                 if (msg.role === 'esp32-bridge') {
                     esp32BridgeSocket = ws;
-                    setHardwareStatus('ESP32_CONNECTED');
-                    console.log('[ENGINE] esp32-bridge registered.');
+                    setHardwareStatus(msg.status ?? 'ESP32_CONNECTED');
+                    console.log(`[ENGINE] esp32-bridge registered (${msg.status ?? 'ESP32_CONNECTED'}).`);
                 }
                 break;
 
