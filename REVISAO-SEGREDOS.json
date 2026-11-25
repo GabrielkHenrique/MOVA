@@ -1,0 +1,5 @@
+{
+  "tipo": "Varredura básica por padrões; não garantia absoluta",
+  "arquivos_com_alerta": [],
+  "senha_AP": "Credencial intencional de rede local de demonstração em config.h"
+}

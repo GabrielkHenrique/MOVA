@@ -1,0 +1,12 @@
+{
+  "tipo": "HTTP SIMULADO, NÃO HARDWARE",
+  "aprovado": true,
+  "verificacoes": [
+    "Prévia identificada como simulada, LED desabilitado",
+    "390px sem overflow, logo carregado e menu com rolagem interna",
+    "Distância simulada controla jogo; comando LED e confirmação persistente",
+    "HTTP 503 invalida estado e entrada, desabilita comandos",
+    "Timeout 2s e recuperação automática sem recarregar",
+    "Sem exceções JavaScript no navegador"
+  ]
+}

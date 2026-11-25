@@ -1,0 +1,91 @@
+{
+  "url": "http://192.168.4.1/",
+  "restauracao_wifi": true,
+  "pagina": {
+    "status": 200,
+    "bytes": 92758,
+    "igual_ao_original": true,
+    "pipo": true,
+    "interface_web": true,
+    "latencia_ms": 248.74
+  },
+  "audio": {
+    "status": 200,
+    "bytes": 1022632,
+    "ogg": true,
+    "content_type": "audio/ogg",
+    "latencia_ms": 2084.51
+  },
+  "sensor": {
+    "status": 200,
+    "resposta": {
+      "valido": false,
+      "perna_levantada": false,
+      "distancia_cm": null,
+      "idade_ms": 53
+    },
+    "latencia_ms": 11.5
+  },
+  "status": {
+    "status": 200,
+    "resposta": {
+      "versao": "neo-mova-web-1",
+      "origem": "ESP32",
+      "boot_id": "90d36f6cda5e49c3",
+      "uptime_ms": 39087,
+      "sensor": {
+        "valido": false,
+        "perna_levantada": false,
+        "distancia_cm": null,
+        "idade_ms": 11
+      },
+      "led": {
+        "modo": "automatico",
+        "ligado": false
+      },
+      "jogo": {
+        "execucao": "cliente_web"
+      },
+      "metricas": {
+        "heap_livre": 205500,
+        "heap_minimo": 179472,
+        "maior_bloco_livre": 110580,
+        "amostras_sensor": 555,
+        "amostras_validas": 0,
+        "amostras_invalidas": 555,
+        "transicoes_perna": 0,
+        "latencia_transicao_ms": 0,
+        "latencia_transicao_max_ms": 0
+      }
+    },
+    "latencia_ms": 19.61
+  },
+  "comandos_led": [
+    {
+      "modo_solicitado": "ligar",
+      "status": 200,
+      "modo_retornado": "ligar",
+      "led_ligado": true,
+      "latencia_ms": 14.45
+    },
+    {
+      "modo_solicitado": "desligar",
+      "status": 200,
+      "modo_retornado": "desligar",
+      "led_ligado": false,
+      "latencia_ms": 28.23
+    },
+    {
+      "modo_solicitado": "automatico",
+      "status": 200,
+      "modo_retornado": "automatico",
+      "led_ligado": false,
+      "latencia_ms": 20.86
+    }
+  ],
+  "navegador": {
+    "screenshot": "/home/gabrielhenri/projects/NEO-MOVA/docs/evidencias/2026-11-24/baseline/pipo-web-esp32.png",
+    "exit_code": 0,
+    "saida": "732303 bytes written to file /home/gabrielhenri/projects/NEO-MOVA/docs/evidencias/2026-11-24/baseline/pipo-web-esp32.png\n"
+  }
+}

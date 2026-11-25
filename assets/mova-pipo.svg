@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gradTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="gradAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Fundo Adesivo Arredondado (Opcional para Corte) -->
+  <rect x="10" y="10" width="580" height="220" rx="36" fill="#0f172a" filter="url(#shadow)" stroke="#1e293b" stroke-width="3"/>
+
+  <!-- Símbolo: Movimento / Pegada Dinâmica / 5 Zonas Inteligentes -->
+  <g transform="translate(45, 38)">
+    <!-- Círculo externo de conectividade da marcha -->
+    <circle cx="80" cy="80" r="70" fill="none" stroke="#1e293b" stroke-width="5" stroke-dasharray="10 8"/>
+    <circle cx="80" cy="80" r="62" fill="#1e293b" fill-opacity="0.35"/>
+
+    <!-- Nó Central (Centro - Base Segura) -->
+    <circle cx="80" cy="80" r="14" fill="url(#gradAmber)"/>
+    <circle cx="80" cy="80" r="7" fill="#ffffff"/>
+
+    <!-- 4 Zonas em Cruz (D-Pad Biofeedback) -->
+    <!-- Frente -->
+    <line x1="80" y1="66" x2="80" y2="34" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="80" cy="28" r="9" fill="url(#gradTeal)"/>
+
+    <!-- Trás -->
+    <line x1="80" y1="94" x2="80" y2="126" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="80" cy="132" r="9" fill="url(#gradTeal)"/>
+
+    <!-- Esquerda -->
+    <line x1="66" y1="80" x2="34" y2="80" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="28" cy="80" r="9" fill="url(#gradTeal)"/>
+
+    <!-- Direita -->
+    <line x1="94" y1="80" x2="126" y2="80" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="132" cy="80" r="9" fill="url(#gradTeal)"/>
+
+    <!-- Arco de impulso dinâmico (Passo) -->
+    <path d="M 38 120 C 20 80, 50 35, 110 32" fill="none" stroke="url(#gradAmber)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6"/>
+  </g>
+
+  <!-- Tipografia MOVA -->
+  <g transform="translate(240, 110)">
+    <text font-family="system-ui, -apple-system, sans-serif" font-size="76" font-weight="900" fill="#ffffff" letter-spacing="6">
+      MOV<tspan fill="url(#gradAmber)">A</tspan>
+    </text>
+  </g>
+
+  <!-- Subtítulo Biomédico -->
+  <g transform="translate(244, 150)">
+    <text font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#38bdf8" letter-spacing="4">
+      PIPO · ENTREGA GELADA
+    </text>
+  </g>
+
+  <!-- Tagline PassoCerto -->
+  <g transform="translate(244, 178)">
+    <rect x="0" y="0" width="135" height="24" rx="12" fill="#0369a1" fill-opacity="0.45" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="67" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#e0f2fe" text-anchor="middle" letter-spacing="1.5">
+      NEO MOVA
+    </text>
+  </g>
+</svg>

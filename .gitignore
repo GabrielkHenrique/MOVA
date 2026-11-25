@@ -1,0 +1,9 @@
+**/build/
+__pycache__/
+*.pyc
+*.bin
+*.elf
+*.map
+.env
+.env.*
+!*.example
